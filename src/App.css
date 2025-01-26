@@ -1,0 +1,274 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --background-color: #eafaf1; /* Light green background */
+  --input-border-color: #dadbdf; /* Soft green for input borders */
+  --input-focus-border-color: #ffd700; /* Bright gold for focus */
+  --button-text-color: #ffffff; /* White text on buttons */
+  --output-text-color: #031f05; /* Deep green for output text */
+  --output-highlight-color: #8bc34a; /* Vibrant green for highlights */
+  --heading-background-color: #1b5e20; /* Dark green for headings */
+  --table-header-background-color: #dcedc8; /* Subtle green for table headers */
+  --tooltip-background-color: #33691e; /* Muted green for tooltips */
+  --chart-background-color: #22c55e90; /* Light green for charts */
+  --chart-border-color: #4d7c0f; /* Soft green for chart borders */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+      --background-color: #10271f; /* Dark green for the background */
+      --input-border-color: #3e4e44; /* Muted dark green for borders */
+      --input-focus-border-color: #66bb6a; /* Soft bright green for focus */
+      --button-background-color: #2e7d32; /* Deep green for buttons */
+      --button-text-color: #ffffff; /* White text on buttons */
+      --output-text-color: #a5d6a7; /* Light green for output text */
+      --output-highlight-color: #81c784; /* Bright green highlights */
+      --heading-background-color: #1b5e20; /* Rich dark green for headings */
+      --table-header-background-color: #2e3b32; /* Muted green for table headers */
+      --tooltip-background-color: #1c4430; /* Dark green for tooltips */
+  }
+}
+
+
+
+input[type="range"] {
+    cursor: pointer;
+}
+input[type="text"],
+input[type="number"] {
+    border-radius: 2em;
+    padding: 8px 12px;
+    border: 1px solid var(--input-border-color);
+ 
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #333;
+    vertical-align: middle;
+    background-color: #fff;
+}
+input:focus {
+    outline: none;
+    border: 1px solid var(--input-focus-border-color);
+}
+.form {
+    color: var(--output-text-color);
+   
+    border-right: 1px solid var(--input-border-color);
+}
+.shadow {
+    box-shadow: 0 4px 10px #071e411a;
+}
+label {
+    font-size: 1em;
+    font-weight: 400;
+    line-height: 1em;
+    color: var(--output-text-color);
+}
+button {
+    padding: 10px 30px;
+    border-radius: 100px;
+    background: var(--button-background-color);
+    font-family: "Lato", sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--button-text-color);
+    border: 0;
+    position: relative;
+    z-index: 10;
+    cursor: pointer;
+}
+button:focus {
+    outline: none;
+}
+.graph-wrapper {
+    padding: 1em;
+}
+.label-wrapper {
+    display: inline-flex;
+    flex-wrap: nowrap;
+    gap: 0.25em;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 0.5em;
+}
+.output,
+.output2,
+.text-output {
+    color: var(--output-text-color);
+    font-size: 16px;
+    line-height: 1.2;
+}
+.output3 {
+    color: var(--output-highlight-color);
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+.output4 {
+    font-family: "Lato", sans-serif;
+    font-style: italic;
+    color: var(--output-text-color);
+    font-size: 16px;
+}
+#resetForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em;
+    margin-bottom: 1em;
+}
+.ts-input {
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+.outputswrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 1em;
+    width: 100%;
+}
+.inneroutputs {
+    padding-left: 2rem;
+}
+.question-mark {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    margin-bottom: -0.175em;
+}
+.form-input-wrapper {
+    max-width: 200px;
+    padding: 2em;
+    border-right: 1px solid #eee;
+}
+.tooltip {
+    position: relative;
+    display: inline-block;
+    height: 1em;
+    cursor: pointer;
+}
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 240px;
+    background-color: var(--tooltip-background-color);
+    color: #fff;
+    text-align: left;
+    border-radius: 6px;
+    padding: 10px;
+    position: absolute;
+    z-index: 10;
+}
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+.calculator-title {
+    font-weight: 900;
+    margin: 0;
+    text-align: center;
+  
+}
+.graph-output {
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+#yearOutputs table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.content-container {
+    padding: 1em;
+}
+.heading-wrapper {
+    padding: 1em;
+    background: var(--heading-background-color);
+}
+.output-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+.output-table th,
+.output-table td {
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+.output-table th {
+    background-color: var(--table-header-background-color);
+}
+#compChart {
+    width: 500px;
+}
+@media only screen and (max-width: 1280px) {
+    #compChart {
+        width: 400px;
+    }
+}
+@media only screen and (max-width: 1080px) {
+    #compChart {
+        width: 350px;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .image-179 {
+        position: absolute;
+        padding: 0 30px 30px 0;
+        width: 175px;
+    }
+    .outputswrapper {
+        flex-direction: column;
+        gap: 1em;
+        width: auto;
+    }
+    #compChart {
+        width: 300px;
+    }
+    .graph-output {
+        flex-direction: column;
+        gap: 1em;
+    }
+    .graph-wrapper {
+        margin-top: 0px;
+        align-self: center;
+    }
+    .form-input-wrapper {
+        max-width: unset;
+        border-bottom: 1px solid #eee;
+        padding: 2em 1em;
+    }
+    .form {
+        flex-direction: column;
+    }
+    #resetForm {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5em;
+    }
+}
+@media only screen and (max-width: 480px) {
+    #resetForm {
+        display: flex;
+    }
+    #compChart {
+        width: 250px;
+    }
+}
+@media (min-width: 768px) {
+  .md\:grid-cols-2 {
+      grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+
+  .md\:grid-cols-3 {
+      grid-template-columns: repeat(3,minmax(0,1fr))
+  }
+}
