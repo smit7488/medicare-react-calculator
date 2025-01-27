@@ -237,7 +237,7 @@ const InputWithLabel = ({ label, value, units, onChange, tooltip, type = "number
       <div>
         <input
           type="range"
-          className="calculation-input rounded-lg p-2 border border-input-border focus:outline-none focus:border-input-focus w-full"
+          className="calculation-input rounded-lg border border-input-border focus:outline-none focus:border-input-focus w-full"
           value={value}
           units={units}
           onChange={onChange}
