@@ -1,18 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
-import { Chart } from 'chart.js';
-import {
-  Chart as ChartJS,
-  BarController,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-} from 'chart.js';
+import { useState, useEffect } from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import CurrencyInput from 'react-currency-input-field';
 import questionIcon from '../assets/images/question.svg';
 
-// Register Chart.js components
-ChartJS.register(BarController, BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
 const Calculator = () => {
   const [inputs, setInputs] = useState({
@@ -25,12 +15,10 @@ const Calculator = () => {
     years: 3,
   });
 
-  const chartRef = useRef(null);
-  let compChartInstance = useRef(null);
-
   const updateInput = (key, value) => {
     setInputs((prev) => ({ ...prev, [key]: value }));
   };
+
 
   const calculateCompensation = () => {
     const yearLabels = [];
@@ -40,48 +28,11 @@ const Calculator = () => {
     for (let i = 1; i <= inputs.years; i++) {
       const yearRev = computeYearRev(i);
       yearLabels.push(`Year ${i}`);
-      yearData.push(yearRev);
+      yearData.push({ year: `Year ${i}`, compensation: yearRev });
       tableRows.push({ year: i, compensation: yearRev });
     }
 
-    if (compChartInstance.current) {
-      compChartInstance.current.destroy();
-    }
-
-    const getRootCSSVariable = (variableName) =>
-      getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
-
-    const backgroundColor = getRootCSSVariable('--chart-background-color');
-    const borderColor = getRootCSSVariable('--chart-border-color');
-
-    compChartInstance.current = new Chart(chartRef.current, {
-      type: 'bar',
-      data: {
-        labels: yearLabels,
-        datasets: [
-          {
-            label: '$ USD',
-            data: yearData,
-            backgroundColor: [backgroundColor],
-            borderColor: [borderColor],
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio:1,
-        resizeDelay: 100, // Optional: delay to improve performance
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-
-    return tableRows;
+    return yearData;
   };
 
   const computeYearRev = (year) => {
@@ -100,48 +51,55 @@ const Calculator = () => {
   };
 
   const [tableData, setTableData] = useState([]);
+  const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
     const rows = calculateCompensation();
     setTableData(rows); // Update the table data
+    setChartData(rows); // Set the chart data
   }, [inputs]);
-
-  
-
-  useEffect(() => {
-    return () => {
-      if (compChartInstance.current) {
-        compChartInstance.current.destroy();
-      }
-    };
-  }, []);
-
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-green-100">
-    
-        <h1 className="text-green-900 zain-black text-7xl bg-heading-bg mb-8 text-center font-black">
-          ProfitPath
-        </h1>
-     
-      <div className="grid xl:grid-cols-[1fr_3fr] rounded-lg border border-input-border bg-white shadow">
-        <form className="form flex flex-col gap-4 p-6">
-          {/* Avg Annualized Premium */}
-          <InputWithLabel
-            label="Avg Annualized Premium ($)"
-            value={inputs.avgPremium}
-            onChange={(e) => updateInput('avgPremium', parseFloat(e.target.value) || 0)}
-            tooltip="The average premium amount collected annually, calculated across all active policies."
-          />
+      <h1 className="text-green-900 -mb-2 zain-black text-7xl bg-heading-bg text-center font-black">
+        ProfitPath
+      </h1>
+      <p className="text-green-900 text-center font-bold mb-4">Calculate your premiums, commissions, and production metrics.</p>
 
-          {/* Avg Contract Level (%) */}
+      <div className="grid md:grid-cols-[1fr_3fr] max-w-7xl w-full rounded-lg border border-input-border bg-white shadow">
+        <form className="form flex flex-col gap-4 p-6">
+          {/* Avg Annualized Premium (formatted as USD) */}
+          <div className="ts-input">
+            <div className="label-wrapper flex items-center gap-2">
+              <label>Avg Annualized Premium</label>
+              <div className="tooltip relative group">
+                <img className="question-mark w-5 h-5" src={questionIcon} alt="?" />
+                <span className="tooltiptext absolute left-0 invisible group-hover:visible bg-tooltip-bg text-white text-sm rounded-lg p-2 z-10 w-64">
+                  The average premium amount collected annually, calculated across all active policies.
+                </span>
+              </div>
+            </div>
+            <CurrencyInput
+              name="avgPremium"
+              value={inputs.avgPremium}
+              onValueChange={(value) => updateInput('avgPremium', value)}
+              prefix="$"
+              decimalsLimit={2}
+              className="calculation-input rounded-lg p-2 border border-input-border focus:outline-none focus:border-input-focus"
+            />
+          </div>
+          {/* Avg Contract Level */}
           <InputWithLabel
-            label="Avg Contract Level (%)"
+            label="Avg Contract Level"
             value={inputs.avgContract}
             onChange={(e) => updateInput('avgContract', parseFloat(e.target.value) || 0)}
             tooltip="The average percentage of the total contract value that has been activated."
+            type="range"
+            units="%"
+            min={1}
+            max={100}
+            step={1}
           />
-
           {/* Issued Apps Per Month */}
           <InputWithLabel
             label="Issued Apps Per Month"
@@ -149,7 +107,6 @@ const Calculator = () => {
             onChange={(e) => updateInput('appsPerMonth', parseFloat(e.target.value) || 0)}
             tooltip="The average number of applications issued each month."
           />
-
           {/* Months of Production */}
           <InputWithLabel
             label="Months of Production"
@@ -157,28 +114,35 @@ const Calculator = () => {
             onChange={(e) => updateInput('monthsOfProduction', parseFloat(e.target.value) || 0)}
             tooltip="The total number of months during which production occurred."
             type="range"
-            units= "months"
+            units=" months"
             min={1}
             max={12}
             step={1}
           />
-
-          {/* Avg Persistency (%) */}
+          {/* Avg Persistency */}
           <InputWithLabel
-            label="Avg Persistency (%)"
+            label="Avg Persistency"
             value={inputs.avgPersistency}
             onChange={(e) => updateInput('avgPersistency', parseFloat(e.target.value) || 0)}
             tooltip="The percentage of policyholders who continue to pay their renewal premium."
+            type="range"
+            units="%"
+            min={0}
+            max={100}
+            step={1}
           />
-
-          {/* Avg Annual Growth (%) */}
+          {/* Avg Annual Growth */}
           <InputWithLabel
-            label="Avg Annual Growth (%)"
+            label="Avg Annual Growth"
             value={inputs.avgGrowth}
             onChange={(e) => updateInput('avgGrowth', parseFloat(e.target.value) || 0)}
             tooltip="The average percentage increase in key metrics over the year."
+            type="range"
+            units="%"
+            min={0}
+            max={100}
+            step={1}
           />
-
           {/* Years to Calculate */}
           <InputWithLabel
             label="Years to Calculate"
@@ -186,43 +150,56 @@ const Calculator = () => {
             onChange={(e) => updateInput('years', parseInt(e.target.value) || 0)}
             tooltip="The number of years to include in the calculation."
             type="range"
-            units= "years"
+            units=" years"
             min={1}
             max={40}
             step={1}
           />
         </form>
 
-        <div className="grid xl:grid-cols-[1fr_2fr]">
-        <div className="table-wrapper w-full max-w-4xl bg-green-900 p-6">
-        <div className="flex flex-row gap-4 text-white font-bold text-lg border-b-2 border-lime-600 pb-2">
-          <div className="min-w-16">Year</div>
-          <div>Total Compensation</div>
-        </div>
-        {tableData.map((row) => (
-          <div
-            key={row.year}
-            className="flex flex-row gap-4 border-b border-lime-700 py-2 text-white"
-          >
-            <div className="min-w-16">{row.year}</div>
-            <div>${row.compensation.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+        <div className="grid md:grid-cols-[1fr_2fr]">
+          <div className="table-wrapper w-full bg-green-900 p-6">
+            <div className="flex flex-row gap-4 text-white font-bold text-lg border-b-2 border-lime-600 pb-2">
+              <div className="min-w-16">Year</div>
+              <div>Total Compensation</div>
+            </div>
+            {tableData.map((row) => (
+              <div key={row.year} className="flex flex-row gap-4 border-b border-lime-700 py-2 text-white">
+                <div className="min-w-16">{row.year}</div>
+                <div>${row.compensation.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+
+          {/* Bar Chart using Recharts */}
           <div className="p-6 flex flex-col justify-center">
-          
-          <canvas id="compChart" ref={chartRef}></canvas></div>
+          <div className="chart-wrapper">
+            <div className="chart-container">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="year" />
+                  <YAxis 
+    tickFormatter={(value) => 
+      new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 })
+        .format(value)
+    }
+  />
+                  <Tooltip />
+                  <Legend />
+                  <Bar dataKey="compensation" stroke="var(--chart-border-color)" fill="var(--chart-background-color)" name="Compensation"/>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+          </div>
         </div>
-        
-
       </div>
-
     </div>
-    
   );
 };
 
-const InputWithLabel = ({ label, value, units, onChange, tooltip, type = "number", min, max, step }) => (
+const InputWithLabel = ({ label, value, units, onChange, tooltip, type = 'number', min, max, step }) => (
   <div className="ts-input">
     <div className="label-wrapper flex items-center gap-2">
       <label>{label}</label>
@@ -233,7 +210,7 @@ const InputWithLabel = ({ label, value, units, onChange, tooltip, type = "number
         </span>
       </div>
     </div>
-    {type === "range" ? (
+    {type === 'range' ? (
       <div>
         <input
           type="range"
@@ -245,7 +222,7 @@ const InputWithLabel = ({ label, value, units, onChange, tooltip, type = "number
           max={max}
           step={step}
         />
-        <div className="text-sm text-gray-700 mt-1">{value} {units}</div>
+        <div className="text-sm text-gray-700 mt-1">{value}{units}</div>
       </div>
     ) : (
       <input
