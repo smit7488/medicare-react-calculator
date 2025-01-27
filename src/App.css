@@ -17,23 +17,6 @@
   --chart-border-color: #4d7c0f; /* Soft green for chart borders */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-      --background-color: #10271f; /* Dark green for the background */
-      --input-border-color: #3e4e44; /* Muted dark green for borders */
-      --input-focus-border-color: #66bb6a; /* Soft bright green for focus */
-      --button-background-color: #2e7d32; /* Deep green for buttons */
-      --button-text-color: #ffffff; /* White text on buttons */
-      --output-text-color: #a5d6a7; /* Light green for output text */
-      --output-highlight-color: #81c784; /* Bright green highlights */
-      --heading-background-color: #1b5e20; /* Rich dark green for headings */
-      --table-header-background-color: #2e3b32; /* Muted green for table headers */
-      --tooltip-background-color: #1c4430; /* Dark green for tooltips */
-  }
-}
-
-
-
 input[type="range"] {
     cursor: pointer;
 }
