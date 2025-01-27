@@ -4,20 +4,30 @@
 
 
 :root {
-  --background-color: #eafaf1; /* Light green background */
-  --input-border-color: #dadbdf; /* Soft green for input borders */
-  --input-focus-border-color: #ffd700; /* Bright gold for focus */
-  --button-text-color: #ffffff; /* White text on buttons */
-  --output-text-color: #031f05; /* Deep green for output text */
-  --output-highlight-color: #8bc34a; /* Vibrant green for highlights */
-  --heading-background-color: #1b5e20; /* Dark green for headings */
-  --table-header-background-color: #dcedc8; /* Subtle green for table headers */
-  --tooltip-background-color: #33691e; /* Muted green for tooltips */
-  --chart-background-color: #22c55e90; /* Light green for charts */
-  --chart-border-color: #4d7c0f; /* Soft green for chart borders */
+  --background-color: #eafaf1;
+  --input-border-color: #dadbdf;
+  --input-focus-border-color: #ffd700;
+  --button-text-color: #ffffff; 
+  --output-text-color: #031f05; 
+  --output-highlight-color: #8bc34a; 
+  --heading-background-color: #1b5e20; 
+  --table-header-background-color: #dcedc8;
+  --tooltip-background-color: #33691e;
+  --chart-background-color: #22c55e90;
+  --chart-border-color: #4d7c0f;
+  --slider-thumb-color: #65a30d;
+  --slider-thumb-color-focus: #55860b;
+  --slider-track-selected: #65a30d;
+  --slider-track-unselected: #d1d5db;
+  --slider-thumb-size: 1rem;
+  --slider-track-height: 0.5rem;
 }
 
-
+.zain-black {
+    font-family: "Zain", serif;
+    font-weight: 900;
+    font-style: normal;
+  }
 
 input[type="range"] {
     cursor: pointer;
@@ -146,6 +156,9 @@ label {
 #compChart {
     width: 500px;
 }
+
+
+  
 @media only screen and (max-width: 1280px) {
     #compChart {
         width: 400px;
@@ -200,12 +213,12 @@ label {
         width: 250px;
     }
 }
-@media (min-width: 1024px) {
-  .lg\:grid-cols-2 {
+@media (min-width: 1280px) {
+  .xl\:grid-cols-2 {
       grid-template-columns:repeat(2,minmax(0,1fr));
   }
 
-  .lg\:grid-cols-3 {
+  .xl\:grid-cols-3 {
       grid-template-columns: repeat(3,minmax(0,1fr))
   }
 }

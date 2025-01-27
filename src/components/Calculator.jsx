@@ -45,12 +45,12 @@ const Calculator = () => {
     }
 
     if (compChartInstance.current) {
-      compChartInstance.current.destroy(); // Destroy the previous chart
+      compChartInstance.current.destroy();
     }
 
     const getRootCSSVariable = (variableName) =>
       getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
-    
+
     const backgroundColor = getRootCSSVariable('--chart-background-color');
     const borderColor = getRootCSSVariable('--chart-border-color');
 
@@ -62,8 +62,8 @@ const Calculator = () => {
           {
             label: '$ USD',
             data: yearData,
-            backgroundColor: [backgroundColor], // Use the CSS variable for the background color
-        borderColor: [borderColor], // Use the CSS variable for the border color
+            backgroundColor: [backgroundColor],
+            borderColor: [borderColor],
             borderWidth: 1,
           },
         ],
@@ -71,7 +71,8 @@ const Calculator = () => {
       options: {
         responsive: true,
         maintainAspectRatio: true,
-        aspectRatio: 1, // Ensure a 1:1 aspect ratio
+        aspectRatio:1,
+        resizeDelay: 100, // Optional: delay to improve performance
         scales: {
           y: {
             beginAtZero: true,
@@ -103,79 +104,27 @@ const Calculator = () => {
   useEffect(() => {
     const rows = calculateCompensation();
     setTableData(rows); // Update the table data
-    initializeChart(); // Initialize or reinitialize the chart when inputs change
   }, [inputs]);
 
+  
+
   useEffect(() => {
-    const handleResize = () => {
-      initializeChart(); // Reinitialize the chart on window resize
-    };
-
-    window.addEventListener('resize', handleResize); // Add resize listener
-
     return () => {
-      window.removeEventListener('resize', handleResize); // Cleanup listener on unmount
       if (compChartInstance.current) {
-        compChartInstance.current.destroy(); // Destroy the chart instance on unmount
+        compChartInstance.current.destroy();
       }
     };
   }, []);
 
-  const initializeChart = () => {
-    const yearLabels = [];
-    const yearData = [];
-
-    for (let i = 1; i <= inputs.years; i++) {
-      const yearRev = computeYearRev(i);
-      yearLabels.push(`Year ${i}`);
-      yearData.push(yearRev);
-    }
-
-    if (compChartInstance.current) {
-      compChartInstance.current.destroy(); // Destroy existing chart instance
-    }
-
-    const getRootCSSVariable = (variableName) =>
-      getComputedStyle(document.documentElement).getPropertyValue(variableName).trim();
-    
-    const backgroundColor = getRootCSSVariable('--chart-background-color');
-    const borderColor = getRootCSSVariable('--chart-border-color');
-    
-    compChartInstance.current = new Chart(chartRef.current, {
-      type: 'bar',
-      data: {
-        labels: yearLabels,
-        datasets: [
-          {
-            label: '$ USD',
-            data: yearData,
-            backgroundColor: [backgroundColor], // Use the CSS variable for the background color
-        borderColor: [borderColor], // Use the CSS variable for the border color
-            borderWidth: 1,
-          },
-        ],
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: true,
-        aspectRatio: 1, // Keep 1:1 aspect ratio
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
-        },
-      },
-    });
-  };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-green-100">
     
-        <h1 className="text-green-900 text-5xl bg-heading-bg mb-8 text-center font-black">
-          Medicare Agent Compensation Calculator
+        <h1 className="text-green-900 zain-black text-7xl bg-heading-bg mb-8 text-center font-black">
+          ProfitPath
         </h1>
      
-      <div className="grid lg:grid-cols-[1fr_3fr] rounded-lg border border-input-border bg-white shadow">
+      <div className="grid xl:grid-cols-[1fr_3fr] rounded-lg border border-input-border bg-white shadow">
         <form className="form flex flex-col gap-4 p-6">
           {/* Avg Annualized Premium */}
           <InputWithLabel
@@ -207,6 +156,11 @@ const Calculator = () => {
             value={inputs.monthsOfProduction}
             onChange={(e) => updateInput('monthsOfProduction', parseFloat(e.target.value) || 0)}
             tooltip="The total number of months during which production occurred."
+            type="range"
+            units= "months"
+            min={1}
+            max={12}
+            step={1}
           />
 
           {/* Avg Persistency (%) */}
@@ -231,10 +185,15 @@ const Calculator = () => {
             value={inputs.years}
             onChange={(e) => updateInput('years', parseInt(e.target.value) || 0)}
             tooltip="The number of years to include in the calculation."
+            type="range"
+            units= "years"
+            min={1}
+            max={40}
+            step={1}
           />
         </form>
 
-        <div className="grid lg:grid-cols-[1fr_2fr]">
+        <div className="grid xl:grid-cols-[1fr_2fr]">
         <div className="table-wrapper w-full max-w-4xl bg-green-900 p-6">
         <div className="flex flex-row gap-4 text-white font-bold text-lg border-b-2 border-lime-600 pb-2">
           <div className="min-w-16">Year</div>
@@ -246,7 +205,7 @@ const Calculator = () => {
             className="flex flex-row gap-4 border-b border-lime-700 py-2 text-white"
           >
             <div className="min-w-16">{row.year}</div>
-            <div>${row.compensation.toLocaleString()}</div>
+            <div>${row.compensation.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
           </div>
         ))}
       </div>
@@ -263,10 +222,10 @@ const Calculator = () => {
   );
 };
 
-const InputWithLabel = ({ label, value, onChange, tooltip }) => (
+const InputWithLabel = ({ label, value, units, onChange, tooltip, type = "number", min, max, step }) => (
   <div className="ts-input">
     <div className="label-wrapper flex items-center gap-2">
-      <label className="font-bold">{label}</label>
+      <label>{label}</label>
       <div className="tooltip relative group">
         <img className="question-mark w-5 h-5" src={questionIcon} alt="?" />
         <span className="tooltiptext absolute left-0 invisible group-hover:visible bg-tooltip-bg text-white text-sm rounded-lg p-2 z-10 w-64">
@@ -274,12 +233,28 @@ const InputWithLabel = ({ label, value, onChange, tooltip }) => (
         </span>
       </div>
     </div>
-    <input
-      className="calculation-input rounded-lg p-2 border border-input-border focus:outline-none focus:border-input-focus"
-      type="number"
-      value={value}
-      onChange={onChange}
-    />
+    {type === "range" ? (
+      <div>
+        <input
+          type="range"
+          className="calculation-input rounded-lg p-2 border border-input-border focus:outline-none focus:border-input-focus w-full"
+          value={value}
+          units={units}
+          onChange={onChange}
+          min={min}
+          max={max}
+          step={step}
+        />
+        <div className="text-sm text-gray-700 mt-1">{value} {units}</div>
+      </div>
+    ) : (
+      <input
+        type={type}
+        className="calculation-input rounded-lg p-2 border border-input-border focus:outline-none focus:border-input-focus"
+        value={value}
+        onChange={onChange}
+      />
+    )}
   </div>
 );
 

@@ -4,10 +4,27 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/src/assets/images/dollar-sign-bag.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Medicare Agent Compensation Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&family=Zain:ital,wght@0,200;0,300;0,400;0,700;0,800;0,900;1,300;1,400&display=swap" rel="stylesheet">
+    <title>ProfitPath - Medicare Agent Compensation Calculator</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+    <script type="text/javascript">
+
+const handleInputChange = (e) => {
+  const value = e.target.value;
+  const min = e.target.min || 0;
+  const max = e.target.max || 100;
+
+  // Calculate percentage
+  const percent = ((value - min) / (max - min)) * 100;
+
+  // Update the CSS variable for the slider
+  e.target.style.setProperty('--value-percent', `${percent}%`);
+};
+    </script>
   </body>
 </html>
