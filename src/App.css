@@ -17,6 +17,10 @@
   --chart-border-color: #4d7c0f; /* Soft green for chart borders */
 }
 
+html, body {
+    overflow-x: hidden;
+}
+
 input[type="range"] {
     cursor: pointer;
 }
@@ -48,22 +52,7 @@ label {
     line-height: 1em;
     color: var(--output-text-color);
 }
-button {
-    padding: 10px 30px;
-    border-radius: 100px;
-    background: var(--button-background-color);
-    font-family: "Lato", sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--button-text-color);
-    border: 0;
-    position: relative;
-    z-index: 10;
-    cursor: pointer;
-}
-button:focus {
-    outline: none;
-}
+
 .graph-wrapper {
     padding: 1em;
 }
@@ -71,29 +60,11 @@ button:focus {
     display: inline-flex;
     flex-wrap: nowrap;
     gap: 0.25em;
-    justify-content: flex-start;
+   
     align-items: center;
     margin-bottom: 0.5em;
 }
-.output,
-.output2,
-.text-output {
-    color: var(--output-text-color);
-    font-size: 16px;
-    line-height: 1.2;
-}
-.output3 {
-    color: var(--output-highlight-color);
-    font-size: 16px;
-    font-weight: bold;
-    line-height: 1.2;
-}
-.output4 {
-    font-family: "Lato", sans-serif;
-    font-style: italic;
-    color: var(--output-text-color);
-    font-size: 16px;
-}
+
 #resetForm {
     display: flex;
     flex-direction: column;
@@ -106,23 +77,8 @@ button:focus {
     flex-direction: column;
     justify-content: flex-start;
 }
-.outputswrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 1em;
-    width: 100%;
-}
-.inneroutputs {
-    padding-left: 2rem;
-}
-.question-mark {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    margin-bottom: -0.175em;
-}
+
+
 .form-input-wrapper {
     max-width: 200px;
     padding: 2em;
