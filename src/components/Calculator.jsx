@@ -185,8 +185,38 @@ const Calculator = () => {
         .format(value)
     }
   />
-                  <Tooltip />
-                  <Legend />
+                   <Tooltip
+    formatter={(value) =>
+      new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(value)
+    }
+    contentStyle={{
+      color: 'var(--tooltip-text-color)', 
+      backgroundColor: 'var(--tooltip-background-color)',
+      borderRadius: '.5rem',
+      padding: '1rem',
+    }}
+    labelStyle={{
+      color: 'var(--tooltip-text-color)', 
+      fontWeight: 'bold', 
+    }}
+    itemStyle={{
+      color: 'var(--tooltip-text-color)', 
+    }}
+  />
+                  <Legend
+    wrapperStyle={{
+      color: 'var(--output-text-color)', 
+      fontSize: '1rem', 
+      fontWeight: 'bold', 
+    }}
+    
+  />
                   <Bar dataKey="compensation" stroke="var(--chart-border-color)" fill="var(--chart-background-color)" name="Compensation"/>
                 </BarChart>
               </ResponsiveContainer>
