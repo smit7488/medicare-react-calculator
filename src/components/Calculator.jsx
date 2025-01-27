@@ -175,7 +175,7 @@ const Calculator = () => {
           Medicare Agent Compensation Calculator
         </h1>
      
-      <div className="grid md:grid-cols-[1fr_3fr] rounded-lg border border-input-border bg-white shadow">
+      <div className="grid lg:grid-cols-[1fr_3fr] rounded-lg border border-input-border bg-white shadow">
         <form className="form flex flex-col gap-4 p-6">
           {/* Avg Annualized Premium */}
           <InputWithLabel
@@ -234,7 +234,7 @@ const Calculator = () => {
           />
         </form>
 
-        <div className="grid md:grid-cols-[1fr_2fr]">
+        <div className="grid lg:grid-cols-[1fr_2fr]">
         <div className="table-wrapper w-full max-w-4xl bg-green-900 p-6">
         <div className="flex flex-row gap-4 text-white font-bold text-lg border-b-2 border-lime-600 pb-2">
           <div className="min-w-16">Year</div>

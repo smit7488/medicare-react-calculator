@@ -55,8 +55,6 @@ input:focus {
 }
 .form {
     color: var(--output-text-color);
-   
-    border-right: 1px solid var(--input-border-color);
 }
 .shadow {
     box-shadow: 0 4px 10px #071e411a;
@@ -152,6 +150,7 @@ button:focus {
     display: inline-block;
     height: 1em;
     cursor: pointer;
+    flex-shrink: 0;
 }
 .tooltip .tooltiptext {
     visibility: hidden;
@@ -263,12 +262,12 @@ button:focus {
         width: 250px;
     }
 }
-@media (min-width: 768px) {
-  .md\:grid-cols-2 {
+@media (min-width: 1024px) {
+  .lg\:grid-cols-2 {
       grid-template-columns:repeat(2,minmax(0,1fr));
   }
 
-  .md\:grid-cols-3 {
+  .lg\:grid-cols-3 {
       grid-template-columns: repeat(3,minmax(0,1fr))
   }
 }
