@@ -17,9 +17,7 @@
   --chart-border-color: #4d7c0f; /* Soft green for chart borders */
 }
 
-html, body {
-    overflow-x: hidden;
-}
+
 
 input[type="range"] {
     cursor: pointer;
@@ -93,13 +91,14 @@ label {
 }
 .tooltip .tooltiptext {
     visibility: hidden;
-    width: 240px;
+    width: auto;
     background-color: var(--tooltip-background-color);
     color: #fff;
     text-align: left;
     border-radius: 6px;
     padding: 10px;
     position: absolute;
+    left: -2rem;
     z-index: 10;
 }
 .tooltip:hover .tooltiptext {
