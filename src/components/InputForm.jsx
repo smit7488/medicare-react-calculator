@@ -1,7 +1,7 @@
 import React from 'react';
 import InputWithLabel from './InputWithLabel';
 import CurrencyInput from 'react-currency-input-field';
-import questionIcon from '../assets/images/question.svg';
+import QuestionIcon from './QuestionIcon';
 
 const InputForm = ({ inputs, updateInput }) => (
   <form className="form flex flex-col gap-4 p-6">
@@ -10,7 +10,7 @@ const InputForm = ({ inputs, updateInput }) => (
             <div className="label-wrapper flex items-center gap-2">
               <label>Avg Annualized Premium</label>
               <div className="tooltip relative group">
-                <img className="question-mark w-5 h-5" src={questionIcon} alt="?" />
+              <QuestionIcon className="w-4 h-4 question-icon" />
                 <span className="tooltiptext absolute left-0 invisible group-hover:visible bg-tooltip-bg text-white text-sm rounded-lg p-2 z-10 w-64">
                   The average premium amount collected annually, calculated across all active policies.
                 </span>
@@ -53,7 +53,7 @@ const InputForm = ({ inputs, updateInput }) => (
       min={1}
       max={12}
       step={1}
-      units="months"
+      units=" months"
     />
     <InputWithLabel
       label="Avg Persistency"
@@ -61,19 +61,19 @@ const InputForm = ({ inputs, updateInput }) => (
       onChange={(e) => updateInput('avgPersistency', parseFloat(e.target.value) || 0)}
       tooltip="The percentage of policyholders who continue to pay their renewal premium."
       type="range"
-      min={50}
+      min={0}
       max={100}
       step={1}
       units="%"
     />
     <InputWithLabel
-      label="Avg Annual Growth (%)"
+      label="Avg Annual Growth"
       value={inputs.avgGrowth}
       onChange={(e) => updateInput('avgGrowth', parseFloat(e.target.value) || 0)}
       tooltip="The average percentage increase in key metrics over the year."
       type="range"
       min={0}
-      max={50}
+      max={500}
       step={1}
       units="%"
     />
@@ -86,7 +86,7 @@ const InputForm = ({ inputs, updateInput }) => (
       min={1}
       max={40}
       step={1}
-      units="years"
+      units=" years"
     />
   </form>
 );

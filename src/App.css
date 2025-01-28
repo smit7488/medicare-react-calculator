@@ -4,25 +4,62 @@
 
 
 :root {
-  --background-color: #DCFCE7;
-  --input-border-color: #dadbdf;
-  --input-focus-border-color: #ffd700;
-  --button-text-color: #ffffff; 
-  --output-text-color: #031f05; 
-  --output-highlight-color: #8bc34a; 
-  --heading-color: #14532D; 
-  --table-header-background-color: #dcedc8;
-  --tooltip-background-color: #33691e;
-  --tooltip-text-color: #f4f4f4;
-  --chart-background-color: #22c55e90;
-  --chart-border-color: #4d7c0f;
-  --slider-thumb-color: #65a30d;
-  --slider-thumb-color-focus: #55860b;
-  --slider-track-selected: #65a30d;
-  --slider-track-unselected: #d1d5db;
-  --slider-thumb-size: 1rem;
-  --slider-track-height: 0.5rem;
+    /* Main Background – cooler mint */
+    --background-color: #DFFCF3;
   
+    /* Inputs */
+    --input-border-color: #d1d5db;            /* neutral gray */
+    --input-focus-border-color: #31bfa1;      /* bright teal for focus */
+  
+    /* Buttons */
+    --button-text-color: #ffffff;
+  
+    /* Text & Highlights */
+    --output-text-color: #0D2B28;            /* dark, teal-ish text */
+    --output-highlight-color: #4BC3B0;       /* cooler highlight green/teal */
+  
+    /* Table */
+    --table-heading-border-color: #2EA083; 
+    --table-row-border-color: #277662;
+    --table-bg-color: #1A4540; 
+    --table-header-background-color: #D1F3EA;
+  
+    /* Headings */
+    --heading-color: #1A4540;
+  
+    /* Tooltip */
+    --tooltip-background-color: #236D61;
+    --tooltip-text-color: #ffffff;
+  
+    /* Charts */
+    --chart-background-color: #2EA08390; /* slightly transparent teal */
+    --chart-border-color: #277662;
+  
+    /* Sliders */
+    --slider-thumb-color: #2EA083;
+    --slider-thumb-color-focus: #208F7A;
+    --slider-track-selected: #2EA083;
+    --slider-track-unselected: #d1d5db;
+    --slider-thumb-size: 1rem;
+    --slider-track-height: 0.5rem;
+
+    --icon-color: currentColor;
+  }
+  
+  .question-icon {
+    /* Force a specific color for icons in this class */
+    --icon-color: #818181;
+  }
+
+.btn-text {
+    color: var(--button-text-color)
+}
+
+.btn-bg {
+    background: var(--table-heading-border-color);
+}
+.table-wrapper {
+    background: var(--table-bg-color);
 }
 
 .profitpath-bg {
@@ -165,6 +202,14 @@ label {
 .output-table th {
     background-color: var(--table-header-background-color);
 }
+
+.table-heading {
+    border-color: var(--table-heading-border-color);
+}
+.table-row-content {
+    border-color: var(--table-row-border-color);
+}
+
 
 .chart-wrapper {
     position: relative;

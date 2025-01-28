@@ -5,16 +5,16 @@ const MultiChartToggle = ({ chartData }) => {
   const [selectedChart, setSelectedChart] = useState('bar');
 
   return (
-    <div>
+    <div className="p-6">
       <div className="flex justify-center gap-4 mb-6">
         <button
-          className={`px-4 py-2 rounded-lg ${selectedChart === 'bar' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          className={`px-4 py-2 rounded-md ${selectedChart === 'bar' ? 'btn-bg btn-text' : 'bg-gray-200'}`}
           onClick={() => setSelectedChart('bar')}
         >
           Bar Chart
         </button>
         <button
-          className={`px-4 py-2 rounded-lg ${selectedChart === 'line' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          className={`px-4 py-2 rounded-md ${selectedChart === 'line' ? 'btn-bg btn-text' : 'bg-gray-200'}`}
           onClick={() => setSelectedChart('line')}
         >
           Line Chart
@@ -63,7 +63,7 @@ const MultiChartToggle = ({ chartData }) => {
             <Bar dataKey="compensation" stroke="var(--chart-border-color)" fill="var(--chart-background-color)" name="Compensation"/>
           </BarChart>
         ) : (
-          <LineChart data={chartData}>
+          <LineChart data={chartData} margin={{ top: 20, right: 30, left: 50, bottom: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" />
             <YAxis tickFormatter={(tick) => `$${tick.toLocaleString()}`} />
