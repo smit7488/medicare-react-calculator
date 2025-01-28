@@ -9,7 +9,7 @@ const OutputTable = ({ tableData }) => (
     {tableData.map((row) => (
       <div key={row.year} className="flex flex-row gap-4 border-b border-lime-700 py-2 text-white">
         <div className="min-w-16">{row.year}</div>
-        <div>${row.compensation.toLocaleString(undefined, { minimumFractionDigits: 2 })}</div>
+        <div>${row.compensation.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
       </div>
     ))}
   </div>

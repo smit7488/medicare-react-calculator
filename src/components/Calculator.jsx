@@ -52,8 +52,9 @@ const Calculator = () => {
   }, [inputs]);
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-green-100">
-      <h1 className="text-green-900 text-4xl font-black mb-4">ProfitPath</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 profitpath-bg">
+      <h1 className="profitpath-heading text-6xl font-black -mb-2">ProfitPath</h1>
+      <p class="profitpath-green-text text-center font-bold mb-4">Calculate your premiums, commissions, and production metrics.</p>
       <div className="grid md:grid-cols-[1fr_3fr] max-w-7xl w-full rounded-lg border border-input-border bg-white shadow">
         <InputForm inputs={inputs} updateInput={updateInput} />
         <div className="grid md:grid-cols-[1fr_2fr]">

@@ -4,13 +4,13 @@
 
 
 :root {
-  --background-color: #eafaf1;
+  --background-color: #DCFCE7;
   --input-border-color: #dadbdf;
   --input-focus-border-color: #ffd700;
   --button-text-color: #ffffff; 
   --output-text-color: #031f05; 
   --output-highlight-color: #8bc34a; 
-  --heading-background-color: #1b5e20; 
+  --heading-color: #14532D; 
   --table-header-background-color: #dcedc8;
   --tooltip-background-color: #33691e;
   --tooltip-text-color: #f4f4f4;
@@ -22,13 +22,24 @@
   --slider-track-unselected: #d1d5db;
   --slider-thumb-size: 1rem;
   --slider-track-height: 0.5rem;
+  
 }
 
-.zain-black {
+.profitpath-bg {
+    background: var(--background-color);
+}
+
+.profitpath-heading {
     font-family: "Zain", serif;
     font-weight: 900;
     font-style: normal;
+    color:var(--heading-color);
   }
+
+  .profitpath-green-text {
+    color:var(--heading-color);
+  }
+
 
 input[type="range"] {
     cursor: pointer;

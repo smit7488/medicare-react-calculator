@@ -1,15 +1,31 @@
 import React from 'react';
 import InputWithLabel from './InputWithLabel';
+import CurrencyInput from 'react-currency-input-field';
+import questionIcon from '../assets/images/question.svg';
 
 const InputForm = ({ inputs, updateInput }) => (
   <form className="form flex flex-col gap-4 p-6">
-    <InputWithLabel
-      label="Avg Annualized Premium"
-      value={inputs.avgPremium}
-      onChange={(e) => updateInput('avgPremium', parseFloat(e.target.value) || 0)}
-      tooltip="The average premium amount collected annually, calculated across all active policies."
-      type="number"
-    />
+       {/* Avg Annualized Premium (formatted as USD) */}
+       <div className="ts-input">
+            <div className="label-wrapper flex items-center gap-2">
+              <label>Avg Annualized Premium</label>
+              <div className="tooltip relative group">
+                <img className="question-mark w-5 h-5" src={questionIcon} alt="?" />
+                <span className="tooltiptext absolute left-0 invisible group-hover:visible bg-tooltip-bg text-white text-sm rounded-lg p-2 z-10 w-64">
+                  The average premium amount collected annually, calculated across all active policies.
+                </span>
+              </div>
+            </div>
+      <CurrencyInput
+             
+              name="avgPremium"
+              value={inputs.avgPremium}
+              onValueChange={(value) => updateInput('avgPremium', value)}
+              prefix="$"
+              decimalsLimit={2}
+              className="calculation-input rounded-lg p-2 border border-input-border focus:outline-none focus:border-input-focus"
+            />
+             </div>
     <InputWithLabel
       label="Avg Contract Level"
       value={inputs.avgContract}

@@ -20,15 +20,47 @@ const MultiChartToggle = ({ chartData }) => {
           Line Chart
         </button>
       </div>
-      <ResponsiveContainer width="100%" height={400}>
+      <div className="chart-wrapper">
+      <div className="chart-container">
+      <ResponsiveContainer width="100%" height="100%">
         {selectedChart === 'bar' ? (
-          <BarChart data={chartData}>
+          <BarChart data={chartData}   margin={{ top: 20, right: 30, left: 50, bottom: 20 }}>
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="year" />
             <YAxis tickFormatter={(tick) => `$${tick.toLocaleString()}`} />
-            <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
-            <Legend />
-            <Bar dataKey="compensation" fill="#65a30d" />
+            <Tooltip
+    formatter={(value) =>
+      new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(value)
+    }
+    contentStyle={{
+      color: 'var(--tooltip-text-color)', 
+      backgroundColor: 'var(--tooltip-background-color)',
+      borderRadius: '.5rem',
+      padding: '1rem',
+    }}
+    labelStyle={{
+      color: 'var(--tooltip-text-color)', 
+      fontWeight: 'bold', 
+    }}
+    itemStyle={{
+      color: 'var(--tooltip-text-color)', 
+    }}
+  />
+                  <Legend
+    wrapperStyle={{
+      color: 'var(--output-text-color)', 
+      fontSize: '1rem', 
+      fontWeight: 'bold', 
+    }}
+    
+  />
+            <Bar dataKey="compensation" stroke="var(--chart-border-color)" fill="var(--chart-background-color)" name="Compensation"/>
           </BarChart>
         ) : (
           <LineChart data={chartData}>
@@ -37,10 +69,12 @@ const MultiChartToggle = ({ chartData }) => {
             <YAxis tickFormatter={(tick) => `$${tick.toLocaleString()}`} />
             <Tooltip formatter={(value) => `$${value.toLocaleString()}`} />
             <Legend />
-            <Line type="monotone" dataKey="compensation" stroke="#0288d1" />
+            <Line type="monotone" dataKey="compensation" stroke="var(--chart-border-color)" />
           </LineChart>
         )}
       </ResponsiveContainer>
+    </div>
+    </div>
     </div>
   );
 };
