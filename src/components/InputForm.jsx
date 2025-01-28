@@ -70,13 +70,13 @@ const InputForm = ({ inputs, updateInput }) => (
       units="%"
     />
     <InputWithLabel
-      label="Avg Annual Growth"
+      label="Avg Growth YoY"
       value={inputs.avgGrowth}
       onChange={(e) => updateInput('avgGrowth', parseFloat(e.target.value) || 0)}
-      tooltip="The average percentage increase in key metrics over the year."
+      tooltip="The average percentage increase of amount of issued applications year over year."
       type="range"
       min={0}
-      max={500}
+      max={50}
       step={1}
       units="%"
     />

@@ -9,9 +9,9 @@ const Calculator = () => {
     avgContract: 18,
     appsPerMonth: 8,
     monthsOfProduction: 10,
-    avgPersistency: 90,
+    avgPersistency: 85,
     avgGrowth: 10,
-    years: 3,
+    years: 10,
   });
 
   const [tableData, setTableData] = useState([]);
@@ -29,21 +29,42 @@ const Calculator = () => {
     }
     return yearData;
   };
-
+  
   const computeYearRev = (year) => {
-    const { avgPremium, appsPerMonth, monthsOfProduction, avgGrowth, avgPersistency, avgContract } = inputs;
-
-    let rev = appsPerMonth * monthsOfProduction * (avgPremium * (avgContract / 100));
-    for (let i = 2; i <= year; i++) {
-      rev +=
-        appsPerMonth *
-        monthsOfProduction *
-        (1 + avgGrowth / 100) *
-        (avgPremium * (avgContract / 100)) *
-        (avgPersistency / 100);
+    const {
+      avgPremium,
+      appsPerMonth,
+      monthsOfProduction,
+      avgGrowth,
+      avgPersistency,
+      avgContract
+    } = inputs;
+  
+    // Base units for monthly apps, months, and contract %
+    const baseFactor =
+      appsPerMonth * monthsOfProduction * (avgPremium * (avgContract / 100));
+  
+    let total = 0;
+  
+    for (let i = 1; i <= year; i++) {
+      // For year 1, the "growth factor" is (1 + growth)^0 = 1, so no change
+      const growthFactor = Math.pow(1 + avgGrowth / 100, i - 1);
+  
+      // Many organizations also apply persistency each year,
+      // but the exact interpretation varies.
+      // You could do (avgPersistency / 100)^(i - 1), 
+      // or apply (avgPersistency / 100) for years > 1 only.
+      // Here's an example applying persistency each year except the first:
+      const persistFactor = i === 1 ? 1 : (avgPersistency / 100);
+  
+      // Yearly revenue for year i
+      const yearlyRev = baseFactor * growthFactor * persistFactor;
+      total += yearlyRev;
     }
-    return rev;
+  
+    return total;
   };
+  
 
   useEffect(() => {
     const rows = calculateCompensation();
