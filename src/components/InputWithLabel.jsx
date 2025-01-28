@@ -2,6 +2,9 @@ import React from 'react';
 import QuestionIcon from './QuestionIcon';
 import { Range } from 'react-range';
 import CurrencyInput from 'react-currency-input-field';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
+
 
 const InputWithLabel = ({ 
   label, 
@@ -18,13 +21,14 @@ const InputWithLabel = ({
   <div className="ts-input">
     <div className="label-wrapper flex items-center gap-2">
       <label>{label}</label>
-      <div className="tooltip relative group">
-      <QuestionIcon className="w-4 h-4 question-icon" />
-        <span className="tooltiptext absolute left-0 invisible group-hover:visible bg-tooltip-bg text-white text-sm rounded-lg p-2 z-10 w-64">
-          {tooltip}
-        </span>
+      
+<Tippy content={tooltip}>
+<div class="tooltip">
+              <QuestionIcon className="w-4 h-4 question-icon" />
+              </div>
+              </Tippy>
       </div>
-    </div>
+   
 
     {type === 'range' ? (
       <div>

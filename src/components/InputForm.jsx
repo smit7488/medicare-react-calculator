@@ -2,6 +2,8 @@ import React from 'react';
 import InputWithLabel from './InputWithLabel';
 import CurrencyInput from 'react-currency-input-field';
 import QuestionIcon from './QuestionIcon';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css';
 
 const InputForm = ({ inputs, updateInput }) => (
   <form className="form flex flex-col gap-4 p-6">
@@ -9,12 +11,13 @@ const InputForm = ({ inputs, updateInput }) => (
        <div className="ts-input">
             <div className="label-wrapper flex items-center gap-2">
               <label>Avg Annualized Premium</label>
-              <div className="tooltip relative group">
+              <Tippy content=" The average premium amount collected annually, calculated across all active policies.">
+                <div class="tooltip">
               <QuestionIcon className="w-4 h-4 question-icon" />
-                <span className="tooltiptext absolute left-0 invisible group-hover:visible bg-tooltip-bg text-white text-sm rounded-lg p-2 z-10 w-64">
-                  The average premium amount collected annually, calculated across all active policies.
-                </span>
               </div>
+              </Tippy>
+             
+            
             </div>
       <CurrencyInput
              
